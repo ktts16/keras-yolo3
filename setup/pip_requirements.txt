@@ -1,0 +1,5 @@
+image
+numpy
+matplotlib
+pydot-ng
+keras==2.2.3
