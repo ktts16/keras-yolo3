@@ -3,9 +3,10 @@ import numpy as np
 
 class YOLO_Kmeans:
 
-    def __init__(self, cluster_number, filename):
+    def __init__(self, cluster_number, filename, anchors_filename="yolo_anchors.txt"):
         self.cluster_number = cluster_number
-        self.filename = "2012_train.txt"
+        self.filename = filename
+        self.anchors_filename = anchors_filename
 
     def iou(self, boxes, clusters):  # 1 box -> k clusters
         n = boxes.shape[0]
@@ -58,7 +59,7 @@ class YOLO_Kmeans:
         return clusters
 
     def result2txt(self, data):
-        f = open("yolo_anchors.txt", 'w')
+        f = open(self.anchors_filename, 'w')
         row = np.shape(data)[0]
         for i in range(row):
             if i == 0:
@@ -96,6 +97,8 @@ class YOLO_Kmeans:
 
 if __name__ == "__main__":
     cluster_number = 9
-    filename = "2012_train.txt"
-    kmeans = YOLO_Kmeans(cluster_number, filename)
+    # filename = "2012_train.txt"
+    filename = "Hardhat_trainval.txt"
+    anchors_filename = "GDUT-HWD_yolo_anchors.txt"
+    kmeans = YOLO_Kmeans(cluster_number, filename, anchors_filename)
     kmeans.txt2clusters()
