@@ -3,7 +3,7 @@ from os import getcwd, getenv
 from os.path import join
 
 sets = ['trainval', 'test']
-classes = ["hardhat", "none"]	#source: name field of labelmap_hardhat.prototxt
+classes = ["none_of_the_above", "hardhat", "none"]	#source: name field of labelmap_hardhat.prototxt
 
 
 def convert_annotation(dataset_path, image_id, list_file):
