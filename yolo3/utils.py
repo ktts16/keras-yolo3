@@ -119,3 +119,12 @@ def get_random_data(annotation_line, input_shape, random=True, max_boxes=20, jit
         box_data[:len(box)] = box
 
     return image_data, box_data
+
+
+def get_data(annotation_line):
+    '''Read bounding boxes from annotation file without scaling'''
+    # *** modified from get_random_data
+    line = annotation_line.split()
+    box = np.array([np.array(list(map(int,box.split(',')))) for box in line[1:]])
+
+    return box
