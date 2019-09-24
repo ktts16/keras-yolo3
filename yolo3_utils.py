@@ -37,3 +37,10 @@ def classification_accuracy_one_image(actual_boxes, predicted_boxes, actual_clas
             correct = correct + 1
             if print_log:    print(iou_vals[max_indices[0]], ba, predicted_boxes[max_indices[0]])
     return correct / len(actual_boxes) # classification rate
+
+
+def all_equals(l, n = 0):
+    return all(v == n for v in l)
+#-- test
+# print(all_equals([0, 0, 0, 0, 0]))
+# print(all_equals([1.0, 2.0, 3.0, 4.0, 0]))
