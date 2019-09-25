@@ -27,6 +27,8 @@ def IOU(boxA, boxB):
 
 def classification_accuracy_one_image(actual_boxes, predicted_boxes, actual_classes, predicted_classes, print_log=False):
     correct = 0
+    if len(predicted_boxes) == 0:
+        return 0
     for ba, ca in zip(actual_boxes, actual_classes):
         iou_vals = np.asarray([IOU(tbp[:4], ba[:4]) for tbp in predicted_boxes])
         max_indices = np.argwhere(iou_vals == np.amax(iou_vals))
