@@ -44,3 +44,10 @@ def all_equals(l, n = 0):
 #-- test
 # print(all_equals([0, 0, 0, 0, 0]))
 # print(all_equals([1.0, 2.0, 3.0, 4.0, 0]))
+
+
+def copy_and_swap_columns(array_2d, from_col_indices):
+    new_array_2d = np.zeros(array_2d.shape)
+    for i, o in enumerate(from_col_indices):
+        new_array_2d[:,i] = array_2d[:,o]
+    return new_array_2d
