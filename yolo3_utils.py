@@ -25,7 +25,7 @@ def IOU(boxA, boxB):
 	return iou
 
 
-def classification_accuracy_one_image(actual_boxes, predicted_boxes, actual_classes, predicted_classes, print_log=False):
+def classification_accuracy_one_image(actual_boxes, predicted_boxes, actual_classes, predicted_classes, print_log=False, iou_threshold=0.5):
     correct = 0
     if len(predicted_boxes) == 0:
         return 0
@@ -34,7 +34,7 @@ def classification_accuracy_one_image(actual_boxes, predicted_boxes, actual_clas
         max_indices = np.argwhere(iou_vals == np.amax(iou_vals))
 #         if print_log:    print(max_indices)
 #         if print_log:    print(iou_vals[max_indices[0]], ba, predicted_boxes[max_indices[0]])
-        if len(max_indices) == 1 and iou_vals[max_indices[0]] >= 0.5 \
+        if len(max_indices) == 1 and iou_vals[max_indices[0]] >= iou_threshold \
         and predicted_classes[max_indices[0]] == ca: #predicted class == actual class
             correct = correct + 1
             if print_log:    print(iou_vals[max_indices[0]], ba, predicted_boxes[max_indices[0]])
