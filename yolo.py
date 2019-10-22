@@ -23,7 +23,8 @@ class YOLO(object):
         "model_path": 'model_data/yolo.h5',
         "anchors_path": 'model_data/yolo_anchors.txt',
         "classes_path": 'model_data/coco_classes.txt',
-        "score" : 0.3,
+        # "score" : 0.3,
+        "score" : 0.6,
         "iou" : 0.45,
         "model_image_size" : (416, 416),
         "gpu_num" : 1,
@@ -229,23 +230,24 @@ def detect_video_2(yolo, video_path=0, output_path=""):
         curr_fps = 0
         fps = "FPS: ??"
         prev_time = timer()
+        return_value, frame = vid.read()
+        im = Image.fromarray(frame)
+        img, _, _, _ = yolo.detect_image(im)
+        image = img
+        i = 0
+        cv2.namedWindow("result", cv2.WINDOW_NORMAL)
         while True:
+            i += 1
             return_value, frame = vid.read()
-            image = Image.fromarray(frame)
-            image, _, _, _ = yolo.detect_image(image)
+            im = Image.fromarray(frame)
+
+            if i % 10 == 0:
+                img, _, _, _ = yolo.detect_image(im)
+                image = img
+                if i == 1000:
+                    i = 0
+
             result = np.asarray(image)
-            curr_time = timer()
-            exec_time = curr_time - prev_time
-            prev_time = curr_time
-            accum_time = accum_time + exec_time
-            curr_fps = curr_fps + 1
-            if accum_time > 1:
-                accum_time = accum_time - 1
-                fps = "FPS: " + str(curr_fps)
-                curr_fps = 0
-            cv2.putText(np.float32(result), text=fps, org=(3, 15), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                        fontScale=0.50, color=(255, 0, 0), thickness=2)
-            cv2.namedWindow("result", cv2.WINDOW_NORMAL)
             cv2.imshow("result", result)
             if isOutput:
                 out.write(result)
